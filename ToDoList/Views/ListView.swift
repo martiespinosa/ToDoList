@@ -21,7 +21,7 @@ struct ListView: View {
                 itemsList
             }
         }
-        .navigationTitle("To-Do List 📋")
+        .navigationTitle("Todo List")
         .toolbar {
             ToolbarItem(placement: .topBarLeading) {
                 EditButton()
