@@ -15,33 +15,17 @@ struct ListView: View {
         VStack {
             if vm.items.isEmpty {
                 Spacer()
-                ContentUnavailableView(
-                    "You're all done",
-                    systemImage: "checkmark",
-                    description: Text("Tap Add button if you have to-dos")
-                )
+                noItems
                 Spacer()
             } else {
-                List {
-                    ForEach(vm.items) { item in
-                        ListRowView(item: item)
-                            .onTapGesture {
-                                withAnimation(.linear(duration: 0.2)) {
-                                    vm.updateItem(item: item)
-                                }
-                            }
-                    }
-                    .onDelete(perform: vm.deleteItem)
-                    .onMove(perform: vm.moveItem)
-                }
-                .padding(.top)
-                .listStyle(PlainListStyle())
+                itemsList
             }
         }
-        .navigationTitle("To-Do List 📝")
+        .navigationTitle("To-Do List 📋")
         .toolbar {
             ToolbarItem(placement: .topBarLeading) {
                 EditButton()
+                    .disabled(vm.items.isEmpty)
             }
             ToolbarItem(placement: .topBarTrailing) {
                 NavigationLink("Add", destination: AddView())
@@ -56,4 +40,31 @@ struct ListView: View {
         ListView()
     }
     .environmentObject(ListViewModel())
+}
+
+extension ListView {
+    var noItems: some View {
+        ContentUnavailableView(
+            "You're all done",
+            systemImage: "checkmark",
+            description: Text("Tap Add button if you have to-dos")
+        )
+    }
+    
+    var itemsList: some View {
+        List {
+            ForEach(vm.items) { item in
+                ListRowView(item: item)
+                    .onTapGesture {
+                        withAnimation(.linear(duration: 0.2)) {
+                            vm.updateItem(item: item)
+                        }
+                    }
+            }
+            .onDelete(perform: vm.deleteItem)
+            .onMove(perform: vm.moveItem)
+        }
+        .padding(.top)
+        .listStyle(PlainListStyle())
+    }
 }

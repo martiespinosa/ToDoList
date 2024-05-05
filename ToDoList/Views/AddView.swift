@@ -18,21 +18,8 @@ struct AddView: View {
     var body: some View {
         ScrollView {
             VStack {
-                TextField("Have to...", text: $textFieldText)
-                    .padding(.horizontal)
-                    .frame(height: 55)
-                    .background(.secondary.opacity(0.25))
-                    .clipShape(RoundedRectangle(cornerRadius: 10))
-                
-                Button(action: saveButtonPressed, label: {
-                    Text("Save".uppercased())
-                        .foregroundStyle(.white)
-                        .font(.headline)
-                        .frame(height: 55)
-                        .frame(maxWidth: .infinity)
-                        .background(Color.accentColor)
-                        .clipShape(RoundedRectangle(cornerRadius: 10))
-                })
+                textField
+                saveButton
             }
             .padding(14)
         }
@@ -67,4 +54,26 @@ struct AddView: View {
         AddView()
     }
     .environmentObject(ListViewModel())
+}
+
+extension AddView {
+    var textField: some View {
+        TextField("Have to...", text: $textFieldText)
+            .padding(.horizontal)
+            .frame(height: 55)
+            .background(.secondary.opacity(0.25))
+            .clipShape(RoundedRectangle(cornerRadius: 10))
+    }
+    
+    var saveButton: some View {
+        Button(action: saveButtonPressed, label: {
+            Text("Save".uppercased())
+                .foregroundStyle(.white)
+                .font(.headline)
+                .frame(height: 55)
+                .frame(maxWidth: .infinity)
+                .background(Color.accentColor)
+                .clipShape(RoundedRectangle(cornerRadius: 10))
+        })
+    }
 }
